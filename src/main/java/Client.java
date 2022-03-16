@@ -1,39 +1,18 @@
 import java.net.*;
 import java.io.*;
-import java.util.Scanner;
 
 public class Client {
-    /*
-    private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
-    public void startConnection(String ip, int port) throws IOException {
-        clientSocket = new Socket(ip, port);
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-    }
-    public String sendMessage(String msg) throws IOException {
-        out.println(msg);
-        String resp = in.readLine();
-        return resp;
-    }
-    public void stopConnection() throws IOException {
-        in.close();
-        out.close();
-        clientSocket.close();
-    }
-     */
     private static DataOutputStream dataOutputStream = null;
     private static DataInputStream dataInputStream = null;
 
-    public static void main(String[] args) {
+    public static void run() {
         try(Socket socket = new Socket("localhost",5000)) {
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
             sendFile("C:\\Users\\Bavo Lesy\\Downloads\\1_RAG_SUPPORT_dossier.pdf");
             //sendFile("path/to/file2.pdf");
-            receiveFile("File2.pdf");
+            //receiveFile("File2.pdf");
             dataInputStream.close();
             dataInputStream.close();
         }catch (Exception e){

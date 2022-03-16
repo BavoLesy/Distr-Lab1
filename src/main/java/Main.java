@@ -5,6 +5,10 @@ public class Main {
     }
 
     void start(){
-        System.out.println("Hello World");
+        Client client1 = new Client();
+        Client client2 = new Client();
+        client1.run();
+        client2.run();
     }
+
 }

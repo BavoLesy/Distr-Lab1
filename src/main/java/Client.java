@@ -1,6 +1,5 @@
 import java.net.*;
 import java.io.*;
-//Merge Conflict Bavo
 public class Client {
     private static DataOutputStream dataOutputStream = null;
     private static DataInputStream dataInputStream = null;

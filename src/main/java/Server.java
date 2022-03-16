@@ -39,15 +39,16 @@ public class Server {
     }
      */
 
-
     public static void main(String[] args) {
+        int clientNumber = 1;
         try(ServerSocket serverSocket = new ServerSocket(5000)){
             System.out.println("listening to port:5000");
 
             while(true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println(clientSocket + " connected.");
-                new ServerThread(clientSocket).start();
+                new ServerThread(clientSocket, clientNumber).start();
+                clientNumber++;
 
             }
         } catch (Exception e){

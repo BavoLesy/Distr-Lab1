@@ -10,10 +10,11 @@ public class ServerThread extends Thread {
     private Socket clientSocket;
     private static DataOutputStream dataOutputStream = null;
     private static DataInputStream dataInputStream = null;
-    int clientNumber = 1;
+    private int clientNumber;
 
-    public ServerThread(Socket socket) {
+    public ServerThread(Socket socket, int clientNumber) {
         this.clientSocket = socket;
+        this.clientNumber = clientNumber;
     }
 
     public void run() {

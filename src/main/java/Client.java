@@ -9,11 +9,10 @@ public class Client {
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-            sendFile("C:\\Users\\Bavo Lesy\\Downloads\\1_RAG_SUPPORT_dossier.pdf");
-            //sendFile("path/to/file2.pdf");
+            sendFile("C:\\Data\\Java\\6-Distributed Systems\\lab1distTCP.txt");
             receiveFile(filename);
             dataInputStream.close();
-            dataInputStream.close();
+            dataOutputStream.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -23,7 +22,6 @@ public class Client {
         int bytes = 0;
         File file = new File(path);
         FileInputStream fileInputStream = new FileInputStream(file);
-
         // send file size
         dataOutputStream.writeLong(file.length());
         // break file into chunks
@@ -34,11 +32,9 @@ public class Client {
         }
         fileInputStream.close();
     }
-    // new
     private static void receiveFile(String fileName) throws Exception{
         int bytes = 0;
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
-
         long size = dataInputStream.readLong();     // read file size
         byte[] buffer = new byte[4*1024];
         while (size > 0 && (bytes = dataInputStream.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1) {

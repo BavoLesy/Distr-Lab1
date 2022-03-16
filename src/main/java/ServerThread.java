@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.*;
-
 /**
  * This thread is responsible to handle client connection.
  *
@@ -8,29 +7,24 @@ import java.net.*;
  */
 public class ServerThread extends Thread {
     private Socket clientSocket;
+    private DatagramSocket UDPsocket; // FOR UDP
     private static DataOutputStream dataOutputStream = null;
     private static DataInputStream dataInputStream = null;
     private int clientNumber;
 
-    public ServerThread(Socket socket, int clientNumber) {
-        this.clientSocket = socket;
+    public ServerThread(Socket clientSocket, int clientNumber) {
+        this.clientSocket = clientSocket;
         this.clientNumber = clientNumber;
     }
-
     public void run() {
         try {
-
             dataInputStream = new DataInputStream(clientSocket.getInputStream());
             dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            receiveFile("NewFile" + clientNumber + ".pdf");
-            //receiveFile("NewFile2.pdf");
-            sendFile("NewFile1.pdf");
-            clientNumber++;
+            receiveFile("ClientToServer_TCP"+clientNumber+".txt");
+            sendFile("ClientToServer_TCP"+clientNumber+".txt");
             dataInputStream.close();
             dataOutputStream.close();
             clientSocket.close();
-
-
         } catch (Exception e) {
             System.out.println("Server exception: " + e.getMessage());
             e.printStackTrace();
@@ -40,7 +34,6 @@ public class ServerThread extends Thread {
     private static void receiveFile(String fileName) throws Exception{
         int bytes = 0;
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
-
         long size = dataInputStream.readLong();     // read file size
         byte[] buffer = new byte[4*1024];
         while (size > 0 && (bytes = dataInputStream.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1) {
@@ -53,10 +46,7 @@ public class ServerThread extends Thread {
         int bytes = 0;
         File file = new File(path);
         FileInputStream fileInputStream = new FileInputStream(file);
-
-        // send file size
         dataOutputStream.writeLong(file.length());
-        // break file into chunks
         byte[] buffer = new byte[4*1024];
         while ((bytes=fileInputStream.read(buffer))!=-1){
             dataOutputStream.write(buffer,0,bytes);

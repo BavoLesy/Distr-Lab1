@@ -7,8 +7,8 @@ public class Main {
     void start(){
         Client client1 = new Client();
         Client client2 = new Client();
-        client1.run();
-        client2.run();
+        client1.run("File_client1");
+        client2.run("File_client2");
     }
 
 }

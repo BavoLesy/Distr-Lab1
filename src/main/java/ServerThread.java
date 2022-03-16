@@ -10,6 +10,7 @@ public class ServerThread extends Thread {
     private Socket clientSocket;
     private static DataOutputStream dataOutputStream = null;
     private static DataInputStream dataInputStream = null;
+    int clientNumber = 1;
 
     public ServerThread(Socket socket) {
         this.clientSocket = socket;
@@ -17,11 +18,13 @@ public class ServerThread extends Thread {
 
     public void run() {
         try {
+
             dataInputStream = new DataInputStream(clientSocket.getInputStream());
             dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            receiveFile("NewFile1.pdf");
+            receiveFile("NewFile" + clientNumber + ".pdf");
             //receiveFile("NewFile2.pdf");
             sendFile("NewFile1.pdf");
+            clientNumber++;
             dataInputStream.close();
             dataOutputStream.close();
             clientSocket.close();

@@ -1,18 +1,18 @@
 import java.net.*;
 import java.io.*;
-
+//Merge Conflict Bavo
 public class Client {
     private static DataOutputStream dataOutputStream = null;
     private static DataInputStream dataInputStream = null;
 
-    public static void run() {
+    public static void run(String filename) {
         try(Socket socket = new Socket("localhost",5000)) {
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
             sendFile("C:\\Users\\Bavo Lesy\\Downloads\\1_RAG_SUPPORT_dossier.pdf");
             //sendFile("path/to/file2.pdf");
-            //receiveFile("File2.pdf");
+            receiveFile(filename);
             dataInputStream.close();
             dataInputStream.close();
         }catch (Exception e){

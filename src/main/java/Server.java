@@ -49,8 +49,8 @@ public class Server {
             dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
 
             receiveFile("NewFile1.pdf");
-            receiveFile("NewFile2.pdf");
-
+            //receiveFile("NewFile2.pdf");
+            sendFile("NewFile1.pdf");
             dataInputStream.close();
             dataOutputStream.close();
             clientSocket.close();
@@ -69,5 +69,20 @@ public class Server {
             size -= bytes;      // read upto file size
         }
         fileOutputStream.close();
+    }
+    private static void sendFile(String path) throws Exception{
+        int bytes = 0;
+        File file = new File(path);
+        FileInputStream fileInputStream = new FileInputStream(file);
+
+        // send file size
+        dataOutputStream.writeLong(file.length());
+        // break file into chunks
+        byte[] buffer = new byte[4*1024];
+        while ((bytes=fileInputStream.read(buffer))!=-1){
+            dataOutputStream.write(buffer,0,bytes);
+            dataOutputStream.flush();
+        }
+        fileInputStream.close();
     }
 }

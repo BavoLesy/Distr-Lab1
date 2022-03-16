@@ -5,12 +5,12 @@ public class Client {
     private static DataInputStream dataInputStream = null;
 
     public static void run(String filename) {
-        try(Socket socket = new Socket("localhost",5000)) {
-            dataInputStream = new DataInputStream(socket.getInputStream());
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        try(Socket socket = new Socket("localhost",5000)) { //connect to socket
+            dataInputStream = new DataInputStream(socket.getInputStream()); //data input stream
+            dataOutputStream = new DataOutputStream(socket.getOutputStream()); //data output stream
 
-            sendFile("C:\\Data\\Java\\6-Distributed Systems\\lab1distTCP.txt");
-            receiveFile(filename);
+            sendFile("C:\\Data\\Java\\6-Distributed Systems\\lab1distTCP.txt"); // send file from client to server
+            receiveFile(filename); // receive file from server
             dataInputStream.close();
             dataOutputStream.close();
         }catch (Exception e){
@@ -20,14 +20,14 @@ public class Client {
 
     private static void sendFile(String path) throws Exception{
         int bytes = 0;
-        File file = new File(path);
-        FileInputStream fileInputStream = new FileInputStream(file);
+        File file = new File(path); //get file
+        FileInputStream fileInputStream = new FileInputStream(file); //open input stream
         // send file size
-        dataOutputStream.writeLong(file.length());
+        dataOutputStream.writeLong(file.length()); //write file length into output stream
         // break file into chunks
         byte[] buffer = new byte[4*1024];
-        while ((bytes=fileInputStream.read(buffer))!=-1){
-            dataOutputStream.write(buffer,0,bytes);
+        while ((bytes=fileInputStream.read(buffer))!=-1){ //while not empty, write into output stream
+            dataOutputStream.write(buffer,0,bytes); // write buffer into output stream
             dataOutputStream.flush();
         }
         fileInputStream.close();

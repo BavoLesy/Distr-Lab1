@@ -5,7 +5,6 @@ public class UDPServerThread extends Thread {
     private final DatagramSocket UDPsocket; // FOR UDP
     private final DatagramPacket UDPreceivePacket;
     private final int clientNumber;
-
     public UDPServerThread(DatagramSocket UDPsocket, DatagramPacket packet, int clientNumber) {
         this.UDPsocket = UDPsocket;
         this.UDPreceivePacket = packet;
